@@ -7,7 +7,7 @@
     "homepage": "https://github.com/daishuligo/wx/",
     "license": "MIT",
     "require": {
-        "php": ">=5.5.0",
+        "php": ">=5.5.0"
     },
 
     "autoload": {
