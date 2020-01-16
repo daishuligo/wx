@@ -1,0 +1,24 @@
+{
+    "name": "daishu/wx",
+    "description": "WX sdk for php",
+    "keywords": ["daishu", "wx","sdk"],
+    "type": "library",
+    "minimum-stability": "stable",
+    "homepage": "https://github.com/daishuligo/wx/",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.5.0",
+        "ext-curl": "*",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+
+    "autoload": {
+        "psr-4": { "Daishuwx\\": "src/" }
+    },
+    "authors": [
+        {
+            "name": "ligo",
+            "email": "ligo9418@126.com"
+        },
+    ]
+}
