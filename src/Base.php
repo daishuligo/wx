@@ -55,7 +55,6 @@ class Base
         $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$this->appId.'&secret='.$this->appSecret;
         $res = $this->curl_get($url);
         $res = json_decode($res,true);
-        var_dump($res);
         if(isset($res['access_token']) || $res['errcode'] == 0){
             $this->token = $res['access_token'];
             return $res;
