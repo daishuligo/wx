@@ -1,5 +1,5 @@
 {
-    "name": "daishu/wx",
+    "name": "daishu/wxchat",
     "description": "WX sdk for php",
     "keywords": ["daishu", "wx","sdk"],
     "type": "library",
