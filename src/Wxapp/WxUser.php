@@ -10,7 +10,7 @@ namespace Daishuwx\Wxapp;
 
 
 use Daishuwx\Base;
-use Daishuwx\Config;
+use Daishuwx\ConfigBak;
 
 /**
  * 微信用户信息
@@ -29,15 +29,19 @@ class WxUser extends Base
         $url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$this->appId.'&secret='.$this->appSecret.'&js_code='.$code.'&grant_type=authorization_code';
         $res = $this->curl_get($url);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -52,19 +56,24 @@ class WxUser extends Base
      * @return array
      *User: ligo
      */
-    public function getPaidUnionId($openId){
+    public function getPaidUnionId($openId)
+    {
         $url = 'https://api.weixin.qq.com/wxa/getpaidunionid?access_token='.$this->token.'&openid='.$openId;
         $res = $this->curl_get($url);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,

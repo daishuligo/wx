@@ -8,6 +8,8 @@
 
 namespace Daishuwx;
 
+use Daishuwx\Config;
+
 class Base
 {
     /**
@@ -28,17 +30,17 @@ class Base
      */
     public $token = '';
 
+    public $config;
+
     public function __construct($appId = null,$appSecret = null,$token = null)
     {
-        if (is_null($appId)){
-            $this->appId = Config::get('appId');
-        }else{
+        $this->config = new Config();
+
+        if (!is_null($appId)){
             $this->appId = $appId;
         }
 
-        if (is_null($appSecret)){
-            $this->appSecret = Config::get('appSecret');
-        }else{
+        if (!is_null($appSecret)){
             $this->appSecret = $appSecret;
         }
 
@@ -55,7 +57,7 @@ class Base
         $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$this->appId.'&secret='.$this->appSecret;
         $res = $this->curl_get($url);
         $res = json_decode($res,true);
-        if(isset($res['access_token']) || $res['errcode'] == 0){
+        if(isset($res['access_token'])){
             $this->token = $res['access_token'];
             return $res;
         }else{

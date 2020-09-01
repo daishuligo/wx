@@ -37,15 +37,19 @@ class Soter extends Base
         $url = 'https://api.weixin.qq.com/cgi-bin/soter/verify_signature?access_token='.$this->token;
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '验证成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '验证失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,

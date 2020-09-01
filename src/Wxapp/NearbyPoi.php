@@ -71,15 +71,19 @@ class NearbyPoi extends Base
         $url = 'https://api.weixin.qq.com/wxa/addnearbypoi?access_token='.$this->token;
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '提交成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '提交失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -103,15 +107,19 @@ class NearbyPoi extends Base
         $url = 'https://api.weixin.qq.com/wxa/delnearbypoi?access_token='.$this->token;
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '提交成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '提交失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -131,15 +139,19 @@ class NearbyPoi extends Base
         $url = 'https://api.weixin.qq.com/wxa/getnearbypoilist?page='.$page.'&page_rows='.$pageRow.'&access_token='.$this->token;
         $res = $this->curl_get($url);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -165,15 +177,19 @@ class NearbyPoi extends Base
         $url = 'https://api.weixin.qq.com/wxa/setnearbypoishowstatus?access_token='.$this->token;
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '提交成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '提交失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,

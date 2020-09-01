@@ -10,7 +10,6 @@ namespace Daishuwx\Wxofficial;
 
 
 use Daishuwx\Base;
-use Daishuwx\Config;
 
 /**
  * 基础信息
@@ -24,7 +23,8 @@ class Official extends Base
      * @return array
      *User: ligo
      */
-    public function callbackIp(){
+    public function callbackIp()
+    {
         $url = 'https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token='.$this->token;
         $res = $this->curl_get($url);
         $res = json_decode($res,true);
@@ -35,8 +35,12 @@ class Official extends Base
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errMsg']) ? $res['errMsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -50,7 +54,8 @@ class Official extends Base
      * @return array
      *User: ligo
      */
-    public function apiDomainIp(){
+    public function apiDomainIp()
+    {
         $url = 'https://api.weixin.qq.com/cgi-bin/get_api_domain_ip?access_token='.$this->token;
         $res = $this->curl_get($url);
         $res = json_decode($res,true);
@@ -61,8 +66,12 @@ class Official extends Base
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errMsg']) ? $res['errMsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -79,7 +88,8 @@ class Official extends Base
      * @return array
      *User: ligo
      */
-    public function callbackCheck($action = 'all',$checkOperator = 'DEFAULT'){
+    public function callbackCheck($action = 'all',$checkOperator = 'DEFAULT')
+    {
         $postData = [
             'action'  => $action,
             'check_operator'  => $checkOperator,
@@ -89,15 +99,19 @@ class Official extends Base
         $url = 'https://api.weixin.qq.com/cgi-bin/callback/check?access_token='.$this->token;
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '验证成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '验证失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errMsg']) ? $res['errMsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -127,5 +141,12 @@ class Official extends Base
         }else{
             return false;
         }
+    }
+
+    public function fromXmlToArray($xml)
+    {
+        // 禁止引用外部xml实体
+        libxml_disable_entity_loader(true);
+        return json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
     }
 }

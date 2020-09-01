@@ -10,7 +10,7 @@ namespace Daishuwx\Wxapp;
 
 
 use Daishuwx\Base;
-use Daishuwx\Config;
+use Daishuwx\ConfigBak;
 
 /**
  * 订阅消息
@@ -28,15 +28,19 @@ class Subscribe extends Base
         $url = 'https://api.weixin.qq.com/wxaapi/newtmpl/gettemplate?access_token='.$this->token;
         $res = $this->curl_get($url);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -66,15 +70,19 @@ class Subscribe extends Base
         $url = 'https://api.weixin.qq.com/wxaapi/newtmpl/addtemplate?access_token='.$this->token;
         $res = $this->curl_post($url,$postData,$hearder);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '内容正常',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '内容违规');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -100,15 +108,19 @@ class Subscribe extends Base
         $url = 'https://api.weixin.qq.com/wxaapi/newtmpl/deltemplate?access_token='.$this->token;
         $res = $this->curl_post($url,$postData,$hearder);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '删除成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '删除失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -126,15 +138,19 @@ class Subscribe extends Base
         $url = 'https://api.weixin.qq.com/wxaapi/newtmpl/getcategory?access_token='.$this->token;
         $res = $this->curl_get($url);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -153,15 +169,19 @@ class Subscribe extends Base
         $url = 'https://api.weixin.qq.com/wxaapi/newtmpl/getpubtemplatekeywords?access_token='.$this->token.'&tid='.$tid;
         $res = $this->curl_get($url);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -190,15 +210,19 @@ class Subscribe extends Base
         
         $res = $this->curl_get($url);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -228,15 +252,19 @@ class Subscribe extends Base
         $url = 'https://api.weixin.qq.com/wxa/msg_sec_check?access_token='.$this->token;
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
-        if($res['errcode'] == 0){
+        if(isset($res['errcode']) && $res['errcode'] == 0){
             return [
                 'status' => true,
                 'msg'    => '发送成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '发送失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,

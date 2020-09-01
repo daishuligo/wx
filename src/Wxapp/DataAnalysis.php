@@ -10,7 +10,7 @@ namespace Daishuwx\Wxapp;
 
 
 use Daishuwx\Base;
-use Daishuwx\Config;
+use Daishuwx\ConfigBak;
 
 /**
  * 数据分析
@@ -66,15 +66,19 @@ class DataAnalysis extends Base
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
 
-        if(isset($res['visit_uv']) || $res['errcode'] == 0){
+        if(isset($res['visit_uv']) || (isset($res['errcode']) && $res['errcode'] == 0)){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -135,15 +139,19 @@ class DataAnalysis extends Base
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
 
-        if(isset($res['visit_uv']) || $res['errcode'] == 0){
+        if(isset($res['visit_uv']) || (isset($res['errcode']) $res['errcode'] == 0)){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -210,15 +218,19 @@ class DataAnalysis extends Base
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
 
-        if(isset($res['visit_uv']) || $res['errcode'] == 0){
+        if(isset($res['visit_uv']) || (isset($res['errcode']) && $res['errcode'] == 0)){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -274,15 +286,19 @@ class DataAnalysis extends Base
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
 
-        if(isset($res['list']) || $res['errcode'] == 0){
+        if(isset($res['list']) || (isset($res['errcode']) && $res['errcode'] == 0)){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -339,15 +355,19 @@ class DataAnalysis extends Base
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
 
-        if(isset($res['list']) || $res['errcode'] == 0){
+        if(isset($res['list']) || (isset($res['errcode']) $res['errcode'] == 0)){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -408,15 +428,19 @@ class DataAnalysis extends Base
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
 
-        if(isset($res['list']) || $res['errcode'] == 0){
+        if(isset($res['list']) || (isset($res['errcode']) $res['errcode'] == 0)){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -484,15 +508,19 @@ class DataAnalysis extends Base
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
 
-        if(isset($res['list']) || $res['errcode'] == 0){
+        if(isset($res['list']) || (isset($res['errcode']) && $res['errcode'] == 0)){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -539,8 +567,8 @@ class DataAnalysis extends Base
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -597,15 +625,19 @@ class DataAnalysis extends Base
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
 
-        if(isset($res['list']) || $res['errcode'] == 0){
+        if(isset($res['list']) || (isset($res['errcode']) && $res['errcode'] == 0)){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,
@@ -662,15 +694,19 @@ class DataAnalysis extends Base
         $res = $this->curl_post($url,$postData);
         $res = json_decode($res,true);
 
-        if(isset($res['list']) || $res['errcode'] == 0){
+        if(isset($res['list']) || (isset($res['errcode']) && $res['errcode'] == 0)){
             return [
                 'status' => true,
                 'msg'    => '请求成功',
                 'data'   => $res,
             ];
         }else{
-            $wxCode = Config::get('wx_code');
-            $msg = (isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : '请求失败');
+            $wxCode = $this->config->get('wxcode');
+            if(isset($res['errcode'])){
+                $msg = isset($wxCode[$res['errcode']]) ? $wxCode[$res['errcode']] : (isset($res['errmsg']) ? $res['errmsg'] : '请求失败');
+            }else{
+                $msg = '请求失败';
+            }
             return [
                 'status' => false,
                 'msg'    => $msg,

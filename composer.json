@@ -4,7 +4,7 @@
     "keywords": ["daishu", "wx","sdk"],
     "type": "library",
     "minimum-stability": "stable",
-    "homepage": "https://github.com/daishuligo/wx/",
+    "homepage": "https://github.com/daishuligo/wechat/",
     "license": "MIT",
     "require": {
         "php": ">=5.5.0"
